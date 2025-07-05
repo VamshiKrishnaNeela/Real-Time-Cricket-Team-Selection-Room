@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/AuthContext"
@@ -67,6 +69,7 @@ const Dashboard = ({ socket, socketConnected }) => {
         console.log(`✅ Room created: ${data.roomCode}`)
         localStorage.setItem("currentRoom", data.roomCode)
 
+        // Navigate immediately
         navigate(`/room/${data.roomCode}`)
       } else {
         throw new Error("Invalid response from server")

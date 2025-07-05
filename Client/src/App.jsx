@@ -1,3 +1,5 @@
+"use client"
+
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import io from "socket.io-client"
@@ -15,18 +17,26 @@ function AppContent() {
 
   useEffect(() => {
     if (user && token) {
-      console.log("Creating socket connection...")
+      console.log("🔌 Creating socket connection...")
 
       const newSocket = io("https://cricket-team-server.vercel.app", {
         auth: {
           token: token,
         },
-        transports: ["websocket", "polling"],
-        timeout: 20000,
+        // Force polling transport for Vercel compatibility
+        transports: ["polling"],
+        upgrade: false,
+        timeout: 30000,
+        forceNew: true,
+        reconnection: true,
+        reconnectionDelay: 1000,
+        reconnectionAttempts: 5,
+        maxHttpBufferSize: 1e8,
       })
 
       newSocket.on("connect", () => {
         console.log("✅ Socket connected:", newSocket.id)
+        console.log("🔗 Transport:", newSocket.io.engine.transport.name)
         setSocketConnected(true)
       })
 
@@ -38,6 +48,15 @@ function AppContent() {
       newSocket.on("connect_error", (error) => {
         console.error("❌ Socket connection error:", error)
         setSocketConnected(false)
+      })
+
+      newSocket.on("reconnect", (attemptNumber) => {
+        console.log("🔄 Socket reconnected after", attemptNumber, "attempts")
+        setSocketConnected(true)
+      })
+
+      newSocket.on("reconnect_error", (error) => {
+        console.error("❌ Socket reconnection error:", error)
       })
 
       setSocket(newSocket)

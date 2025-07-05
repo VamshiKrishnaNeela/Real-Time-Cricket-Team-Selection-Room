@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken")
 const roomHandlers = require("./handlers/roomHandlers")
 const gameHandlers = require("./handlers/gameHandlers")
 const disconnectHandler = require("./handlers/disconnectHandler")
-// require('dotenv').config();
 
 const socketAuth = (socket, next) => {
   try {
@@ -23,10 +22,17 @@ const socketAuth = (socket, next) => {
 }
 
 const initializeSocket = (io) => {
+  // Add connection logging
+  io.engine.on("connection_error", (err) => {
+    console.log("❌ Socket.IO connection error:", err.req, err.code, err.message, err.context)
+  })
+
   io.use(socketAuth)
 
   io.on("connection", (socket) => {
     console.log(`\n🔌 User connected: ${socket.id} | User ID: ${socket.userId}`)
+    console.log(`🔗 Transport: ${socket.conn.transport.name}`)
+    console.log(`📊 Total connections: ${io.engine.clientsCount}`)
 
     const roomHandler = roomHandlers(io, socket)
     const gameHandler = gameHandlers(io, socket)
@@ -54,15 +60,28 @@ const initializeSocket = (io) => {
       gameHandler.selectPlayer(data)
     })
 
+    // Connection monitoring
+    socket.on("ping", () => {
+      socket.emit("pong")
+    })
+
     // Disconnect event
     socket.on("disconnect", (reason) => {
       console.log(`❌ User ${socket.id} disconnected: ${reason}`)
+      console.log(`📊 Remaining connections: ${io.engine.clientsCount - 1}`)
       handleDisconnect()
     })
 
     // Error handling
     socket.on("error", (error) => {
       console.error(`❌ Socket error for ${socket.id}:`, error)
+    })
+
+    // Send connection confirmation
+    socket.emit("connected", {
+      socketId: socket.id,
+      transport: socket.conn.transport.name,
+      timestamp: new Date().toISOString(),
     })
   })
 
