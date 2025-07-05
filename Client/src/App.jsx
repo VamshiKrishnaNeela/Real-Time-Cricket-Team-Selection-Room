@@ -19,19 +19,13 @@ function AppContent() {
     if (user && token) {
       console.log("🔌 Creating socket connection...")
 
-      const newSocket = io("https://cricket-team-server.vercel.app", {
+      // Replace with your Railway/Render URL
+      const SERVER_URL = "https://cricket-team-server.vercel.app" // or .onrender.com
+
+      const newSocket = io(SERVER_URL, {
         auth: {
           token: token,
         },
-        // Force polling transport for Vercel compatibility
-        transports: ["polling"],
-        upgrade: false,
-        timeout: 30000,
-        forceNew: true,
-        reconnection: true,
-        reconnectionDelay: 1000,
-        reconnectionAttempts: 5,
-        maxHttpBufferSize: 1e8,
       })
 
       newSocket.on("connect", () => {
@@ -48,15 +42,6 @@ function AppContent() {
       newSocket.on("connect_error", (error) => {
         console.error("❌ Socket connection error:", error)
         setSocketConnected(false)
-      })
-
-      newSocket.on("reconnect", (attemptNumber) => {
-        console.log("🔄 Socket reconnected after", attemptNumber, "attempts")
-        setSocketConnected(true)
-      })
-
-      newSocket.on("reconnect_error", (error) => {
-        console.error("❌ Socket reconnection error:", error)
       })
 
       setSocket(newSocket)

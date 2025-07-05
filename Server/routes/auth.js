@@ -5,8 +5,17 @@ const auth = require("../middleware/auth")
 
 const router = express.Router()
 
+// Add this function at the top after the imports
+const setCorsHeaders = (res) => {
+  res.header("Access-Control-Allow-Origin", "https://cricket-team-two.vercel.app")
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization")
+  res.header("Access-Control-Allow-Credentials", "true")
+}
+
 // Register
 router.post("/register", async (req, res) => {
+  setCorsHeaders(res)
   try {
     const { username, email, password } = req.body
 
@@ -80,6 +89,7 @@ router.post("/register", async (req, res) => {
 
 // Login
 router.post("/login", async (req, res) => {
+  setCorsHeaders(res)
   try {
     const { email, password } = req.body
 
@@ -121,6 +131,7 @@ router.post("/login", async (req, res) => {
 
 // Get user profile
 router.get("/profile", auth, async (req, res) => {
+  setCorsHeaders(res)
   try {
     const user = await User.findById(req.userId).select("-password")
     if (!user) {
@@ -135,6 +146,7 @@ router.get("/profile", auth, async (req, res) => {
 
 // Get user game history
 router.get("/history", auth, async (req, res) => {
+  setCorsHeaders(res)
   try {
     const user = await User.findById(req.userId).select("gameHistory gamesPlayed")
     if (!user) {
@@ -153,6 +165,7 @@ router.get("/history", auth, async (req, res) => {
 
 // Check active room session
 router.get("/active-room", auth, async (req, res) => {
+  setCorsHeaders(res)
   try {
     const UserSession = require("../models/UserSession")
     const Room = require("../models/Room")
