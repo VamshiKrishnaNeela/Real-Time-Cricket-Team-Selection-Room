@@ -1,0 +1,130 @@
+.player-card {
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.player-card.selectable {
+  cursor: pointer;
+}
+
+.player-card.selectable:hover {
+  border-color: #4299e1;
+  background: #ebf8ff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(66, 153, 225, 0.2);
+}
+
+.player-card.selected {
+  background: #f0fff4;
+  border-color: #48bb78;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.country-flag {
+  font-size: 1.5rem;
+}
+
+.role-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.role-batsman {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.role-bowler {
+  background: #fecaca;
+  color: #dc2626;
+}
+
+.role-allrounder {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.role-keeper {
+  background: #e9d5ff;
+  color: #7c3aed;
+}
+
+.role-default {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.player-info {
+  margin-bottom: 15px;
+}
+
+.player-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin-bottom: 5px;
+}
+
+.player-country {
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.select-prompt {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.select-text {
+  color: #4299e1;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.selected-indicator {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.selected-text {
+  color: #48bb78;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.player-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #4299e1, #48bb78);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.player-card.selectable:hover::before,
+.player-card.selected::before {
+  opacity: 1;
+}
