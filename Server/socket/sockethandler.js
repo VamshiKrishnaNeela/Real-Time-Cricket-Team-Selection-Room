@@ -1,4 +1,4 @@
-const Room = require("../models/room.js")
+const Room = require("../models/Room.js")
 
 // Main socket connection handler function
 module.exports = (io) => {
