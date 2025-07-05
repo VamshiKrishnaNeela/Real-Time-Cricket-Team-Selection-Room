@@ -1,5 +1,5 @@
 const express = require("express")
-const Room = require("../models/room")
+const Room = require("../models/room.js")
 const router = express.Router()
 
 // Generate random room code function
