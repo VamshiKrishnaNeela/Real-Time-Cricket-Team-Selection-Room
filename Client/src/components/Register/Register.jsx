@@ -42,7 +42,7 @@ const Register = ({ setCurrentPage }) => {
     }
 
     try {
-      const response = await fetch("https://cricket-team-server.vercel.app/api/auth/register", {
+      const response = await fetch("https://real-time-cricket-team-selection-room-q9nk.onrender.com/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

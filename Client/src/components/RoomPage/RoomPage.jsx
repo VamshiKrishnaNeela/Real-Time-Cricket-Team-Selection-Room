@@ -23,7 +23,7 @@ const RoomPage = ({ user, roomCode, onLeaveRoom }) => {
 
   // Initialize socket connection on mount
   useEffect(() => {
-    const newSocket = io("https://cricket-team-server.vercel.app")
+    const newSocket = io("https://real-time-cricket-team-selection-room-q9nk.onrender.com")
     setSocket(newSocket)
 
     // Connection event handlers

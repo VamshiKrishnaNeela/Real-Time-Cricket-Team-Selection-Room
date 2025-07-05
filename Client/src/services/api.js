@@ -1,6 +1,6 @@
 // API service functions for server communication
 
-const API_BASE_URL = "https://cricket-team-server.vercel.app/api"
+const API_BASE_URL = "https://real-time-cricket-team-selection-room-q9nk.onrender.com/api"
 
 // Create fetch wrapper with error handling
 const fetchWithErrorHandling = async (url, options = {}) => {

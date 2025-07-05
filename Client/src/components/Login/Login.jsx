@@ -27,7 +27,7 @@ const Login = ({ setCurrentPage, setUser }) => {
     setError("")
 
     try {
-      const response = await fetch("https://cricket-team-server.vercel.app/api/auth/login", {
+      const response = await fetch("https://real-time-cricket-team-selection-room-q9nk.onrender.com/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
