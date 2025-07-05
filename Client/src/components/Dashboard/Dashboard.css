@@ -1,271 +1,155 @@
 .dashboard-container {
-  min-height: 100vh;
-  background: #f8fafc;
-}
-
-.dashboard-header {
-  background: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid #e2e8f0;
-}
-
-.header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
   display: flex;
+  justify-content: center;
   align-items: center;
-  justify-content: space-between;
-}
-
-.dashboard-title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #2d3748;
-  margin-bottom: 5px;
-}
-
-.welcome-text {
-  color: #718096;
-  font-size: 1rem;
-}
-
-.logout-btn {
-  background: #e53e3e;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.logout-btn:hover {
-  background: #c53030;
-  transform: translateY(-1px);
-}
-
-.dashboard-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 30px 20px;
-}
-
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
+  min-height: 100vh;
+  padding: 20px;
 }
 
 .dashboard-card {
   background: white;
-  border-radius: 16px;
-  padding: 25px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 700px;
 }
 
-.dashboard-card.full-width {
-  grid-column: 1 / -1;
-}
-
-.card-title {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #2d3748;
-  margin-bottom: 20px;
-}
-
-.action-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.action-btn {
-  padding: 15px 20px;
-  border: none;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.action-btn.primary {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
-
-.action-btn.primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-}
-
-.action-btn.secondary {
-  background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-  color: white;
-}
-
-.action-btn.secondary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(72, 187, 120, 0.3);
-}
-
-.join-room-section {
-  display: flex;
-  gap: 10px;
-}
-
-.room-input {
-  flex: 1;
-  padding: 15px;
-  border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  font-size: 1rem;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
-}
-
-.room-input:focus {
-  outline: none;
-  border-color: #48bb78;
-  box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.1);
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.stat-item {
-  text-align: center;
-  padding: 20px;
-  background: #f7fafc;
-  border-radius: 12px;
-}
-
-.stat-number {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #667eea;
-  margin-bottom: 5px;
-}
-
-.stat-label {
-  color: #718096;
-  font-size: 0.9rem;
-  font-weight: 500;
-}
-
-.empty-state {
-  text-align: center;
-  padding: 40px 20px;
-  color: #718096;
-}
-
-.history-list {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.history-item {
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 20px;
-  background: #f7fafc;
-}
-
-.history-header {
+.dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #f0f0f0;
 }
 
-.room-code {
-  font-weight: 600;
-  color: #2d3748;
-  font-size: 1.1rem;
+.welcome-section h2 {
+  color: #333;
+  margin: 0 0 5px 0;
+  font-size: 28px;
 }
 
-.game-date {
-  color: #718096;
-  font-size: 0.9rem;
+.welcome-section p {
+  color: #666;
+  margin: 0;
+  font-size: 16px;
 }
 
-.history-details {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.logout-btn {
+  padding: 10px 20px;
+  font-size: 14px;
 }
 
-.players-section,
-.selected-players-section {
-  color: #4a5568;
-  font-size: 0.9rem;
+.game-info {
+  text-align: center;
+  margin-bottom: 40px;
 }
 
-.selected-players {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
+.game-info h3 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 24px;
 }
 
-.player-tag {
-  background: #667eea;
-  color: white;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 500;
+.game-info p {
+  color: #666;
+  font-size: 16px;
 }
 
-.loading {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  font-size: 1.2rem;
-  color: #718096;
+.room-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 30px;
 }
 
-.error-message {
-  background: #fed7d7;
-  border: 1px solid #feb2b2;
-  color: #c53030;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 0.9rem;
+.action-card {
+  text-align: center;
+  padding: 30px 20px;
+  border: 2px solid #f0f0f0;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.action-card:hover {
+  border-color: #667eea;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+}
+
+.action-card h4 {
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.action-card p {
+  color: #666;
   margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.action-btn {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.room-code-input {
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+.game-rules {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  border-left: 4px solid #667eea;
+}
+
+.game-rules h4 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.game-rules ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.game-rules li {
+  color: #666;
+  margin-bottom: 8px;
+  padding-left: 20px;
+  position: relative;
+}
+
+.game-rules li::before {
+  content: "⚡";
+  position: absolute;
+  left: 0;
+  color: #667eea;
 }
 
 @media (max-width: 768px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .header-content {
+  .dashboard-header {
     flex-direction: column;
     gap: 15px;
     text-align: center;
   }
 
-  .join-room-section {
-    flex-direction: column;
-  }
-
-  .stats-grid {
+  .room-actions {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 
-  .history-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
+  .dashboard-card {
+    padding: 30px 20px;
   }
 }

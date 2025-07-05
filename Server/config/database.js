@@ -1,26 +1,12 @@
 const mongoose = require("mongoose")
 
+// Database connection configuration function
 const connectDB = async () => {
   try {
-    mongoose.set("strictQuery", false)
-
-    const conn = await mongoose.connect("mongodb+srv://wizardo:Kalvium%402023@cluster0.qsvns2l.mongodb.net/CricketTeamSelection")
-
-    console.log(`MongoDB Connected 🧢: ${conn.connection.host}`)
-
-    mongoose.connection.on("error", (err) => {
-      console.error("MongoDB connection error:", err)
-    })
-
-    mongoose.connection.on("disconnected", () => {
-      console.log("MongoDB disconnected")
-    })
-
-    mongoose.connection.on("reconnected", () => {
-      console.log("MongoDB reconnected")
-    })
+    const conn = await mongoose.connect("mongodb+srv://Vishnu:vishnu2005@cluster0.z1rrgh7.mongodb.net/CricketApp")
+    console.log(`MongoDB Connected: ${conn.connection.host}`)
   } catch (error) {
-    console.error("MongoDB connection error:", error)
+    console.error("Database connection error:", error)
     process.exit(1)
   }
 }

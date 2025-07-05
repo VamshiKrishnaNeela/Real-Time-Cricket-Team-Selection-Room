@@ -1,101 +1,57 @@
 "use client"
 
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import { useState, useEffect } from "react"
-import io from "socket.io-client"
-import { AuthProvider, useAuth } from "./context/AuthContext"
-import Login from "./components/Auth/Login"
-import Register from "./components/Auth/Register"
-import Dashboard from "./components/Dashboard/Dashboard"
-import GameRoom from "./components/GameRoom/GameRoom"
+import Login from "./components/Login/Login.jsx"
+import Register from "./components/Register/Register.jsx"
+import Dashboard from "./components/Dashboard/Dashboard.jsx"
+import RoomPage from "./components/RoomPage/RoomPage.jsx"
 import "./App.css"
 
-function AppContent() {
-  const [socket, setSocket] = useState(null)
-  const [socketConnected, setSocketConnected] = useState(false)
-  const { user, token, loading } = useAuth()
+// Main application component with routing
+function App() {
+  const [currentPage, setCurrentPage] = useState("login")
+  const [user, setUser] = useState(null)
+  const [roomCode, setRoomCode] = useState("")
 
+  // Check for existing user session
   useEffect(() => {
-    if (user && token) {
-      console.log("🔌 Creating socket connection...")
-
-      // Replace with your Railway/Render URL
-      const SERVER_URL = "https://cricket-team-server.vercel.app" // or .onrender.com
-
-      const newSocket = io(SERVER_URL, {
-        auth: {
-          token: token,
-        },
-      })
-
-      newSocket.on("connect", () => {
-        console.log("✅ Socket connected:", newSocket.id)
-        console.log("🔗 Transport:", newSocket.io.engine.transport.name)
-        setSocketConnected(true)
-      })
-
-      newSocket.on("disconnect", (reason) => {
-        console.log("❌ Socket disconnected:", reason)
-        setSocketConnected(false)
-      })
-
-      newSocket.on("connect_error", (error) => {
-        console.error("❌ Socket connection error:", error)
-        setSocketConnected(false)
-      })
-
-      setSocket(newSocket)
-
-      return () => {
-        console.log("🔌 Cleaning up socket connection")
-        newSocket.close()
-        setSocket(null)
-        setSocketConnected(false)
-      }
-    } else {
-      if (socket) {
-        socket.close()
-        setSocket(null)
-        setSocketConnected(false)
-      }
+    const savedUser = localStorage.getItem("user")
+    if (savedUser) {
+      setUser(savedUser)
+      setCurrentPage("dashboard")
     }
-  }, [user, token])
+  }, [])
 
-  if (loading) {
-    return (
-      <div className="app-loading">
-        <div className="loading-spinner">Loading...</div>
-      </div>
-    )
+  // Handle user logout and cleanup
+  const handleLogout = () => {
+    localStorage.removeItem("user")
+    setUser(null)
+    setCurrentPage("login")
   }
 
-  return (
-    <div className="app">
-      <Routes>
-        <Route path="/login" element={!user ? <Login /> : <Navigate to="/dashboard" />} />
-        <Route path="/register" element={!user ? <Register /> : <Navigate to="/dashboard" />} />
-        <Route
-          path="/dashboard"
-          element={user ? <Dashboard socket={socket} socketConnected={socketConnected} /> : <Navigate to="/login" />}
-        />
-        <Route
-          path="/room/:roomCode"
-          element={user ? <GameRoom socket={socket} socketConnected={socketConnected} /> : <Navigate to="/login" />}
-        />
-        <Route path="/" element={<Navigate to={user ? "/dashboard" : "/login"} />} />
-      </Routes>
-    </div>
-  )
-}
+  // Navigate to room page function
+  const handleJoinRoom = (code) => {
+    setRoomCode(code)
+    setCurrentPage("room")
+  }
 
-function App() {
-  return (
-    <AuthProvider>
-      <Router>
-        <AppContent />
-      </Router>
-    </AuthProvider>
-  )
+  // Render current page based on state
+  const renderCurrentPage = () => {
+    switch (currentPage) {
+      case "login":
+        return <Login setCurrentPage={setCurrentPage} setUser={setUser} />
+      case "register":
+        return <Register setCurrentPage={setCurrentPage} />
+      case "dashboard":
+        return <Dashboard user={user} onLogout={handleLogout} onJoinRoom={handleJoinRoom} />
+      case "room":
+        return <RoomPage user={user} roomCode={roomCode} onLeaveRoom={() => setCurrentPage("dashboard")} />
+      default:
+        return <Login setCurrentPage={setCurrentPage} setUser={setUser} />
+    }
+  }
+
+  return <div className="App">{renderCurrentPage()}</div>
 }
 
 export default App

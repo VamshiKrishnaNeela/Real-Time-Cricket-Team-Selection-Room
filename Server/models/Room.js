@@ -1,71 +1,35 @@
 const mongoose = require("mongoose")
 
-const roomSchema = new mongoose.Schema({
-  code: {
-    type: String,
-    required: true,
-    unique: true,
-    uppercase: true,
-  },
-  host: {
-    type: String,
-    required: false,
-  },
-  users: [
-    {
-      id: String,
-      userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-      username: String,
-      selectedPlayers: [Object],
-      disconnected: {
-        type: Boolean,
-        default: false,
-      },
+// Room schema for game session
+const roomSchema = new mongoose.Schema(
+  {
+    roomCode: {
+      type: String,
+      required: true,
+      unique: true,
     },
-  ],
-  availablePlayers: [
-    {
-      id: Number,
-      name: String,
-      role: String,
-      country: String,
+    host: {
+      type: String,
+      required: true,
     },
-  ],
-  selectedPlayers: {
-    type: Map,
-    of: [Object],
-    default: new Map(),
+    players: [
+      {
+        username: String,
+        selectedPlayers: [String],
+        isReady: Boolean,
+      },
+    ],
+    gameState: {
+      isStarted: Boolean,
+      currentTurn: String,
+      turnOrder: [String],
+      availablePlayers: [String],
+      turnStartTime: Date,
+    },
   },
-  turnOrder: [String],
-  currentTurn: {
-    type: Number,
-    default: 0,
+  {
+    timestamps: true,
   },
-  isStarted: {
-    type: Boolean,
-    default: false,
-  },
-  round: {
-    type: Number,
-    default: 1,
-  },
-  turnStartTime: {
-    type: Date,
-    default: null,
-  },
-  maxPlayersPerUser: {
-    type: Number,
-    default: 5,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-    expires: 86400, // 24 hours - this automatically creates TTL index
-  },
-})
-
+)
 
 module.exports = mongoose.model("Room", roomSchema)
